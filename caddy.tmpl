@@ -4,18 +4,30 @@
     {{ $addrLen := len $value.Addresses }}
     {{ if eq $addrLen 1 }}
       {{ with $address := index $value.Addresses 0 }}
-      proxy / {{ $address.IP }}:{{ $address.Port }}
+      proxy / {{ $address.IP }}:{{ $address.Port }} {
+        proxy_header Host {host}
+        proxy_header X-Real-IP {remote}
+        proxy_header X-Forwarded-Proto {scheme}
+      }
       {{ end }}
     {{ else if $value.Env.VIRTUAL_PORT }}
       {{ range $i, $address := $value.Addresses }}
         {{ if eq $address.Port $value.Env.VIRTUAL_PORT }}
-        proxy / {{ $address.IP }}:{{ $address.Port }}
+        proxy / {{ $address.IP }}:{{ $address.Port }} {
+          proxy_header Host {host}
+          proxy_header X-Real-IP {remote}
+          proxy_header X-Forwarded-Proto {scheme}
+        }
         {{ end }}
       {{ end }}
     {{ else }}
       {{ range $i, $address := $value.Addresses }}
         {{ if eq $address.Port "80" }}
-        proxy / {{ $address.IP }}:{{ $address.Port }}
+        proxy / {{ $address.IP }}:{{ $address.Port }} {
+          proxy_header Host {host}
+          proxy_header X-Real-IP {remote}
+          proxy_header X-Forwarded-Proto {scheme}
+        }
         {{ end }}
       {{ end }}
     {{ end }}
