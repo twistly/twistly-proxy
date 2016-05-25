@@ -1,6 +1,10 @@
 {{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
 {{ $host }} {
   {{ range $index, $value := $containers }}
+    {{ $basicauth := $value.Env.BASIC_AUTH }}
+    {{ if $basicauth }}
+        basicauth {{ $basicauth }}
+    {{ end }}
     {{ $addrLen := len $value.Addresses }}
     {{ if eq $addrLen 1 }}
       {{ with $address := index $value.Addresses 0 }}
