@@ -1,4 +1,4 @@
-FROM nimmis/alpine:3.3
+FROM nimmis/alpine:3.4
 MAINTAINER BlackGlory <woshenmedoubuzhidao@blackglory.me>
 
 RUN apk update && apk upgrade && \

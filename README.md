@@ -18,4 +18,4 @@ Then to run it:
 $ docker run -v /var/run/docker.sock:/tmp/docker.sock:ro -v /data/.caddy:/root/.caddy --name caddy-proxy -p 80:80 -p 443:443 -e CADDY_OPTIONS="--email youremail@example.com" -d blackglory/caddy-proxy:0.2.0
 ```
 
-When you launch new (or stop) containers caddy-proxy will restart to make the new containers available.
+When you launch new (or stop) containers caddy-proxy will reload its configuration to make the new containers available.
