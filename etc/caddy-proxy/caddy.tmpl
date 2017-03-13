@@ -16,10 +16,10 @@
         {{ if $websocket }}
         websocket
         {{ end }}
-        {{ if $extras }}
-        {{ $extras }}
-        {{ end }}
       }
+      {{ if $extras }}
+      {{ $extras }}
+      {{ end }}
       {{ end }}
     {{ else if $value.Env.VIRTUAL_PORT }}
       {{ range $i, $address := $value.Addresses }}
@@ -30,10 +30,10 @@
           {{ if $websocket }}
           websocket
           {{ end }}
-          {{ if $extras }}
-          {{ $extras }}
-          {{ end }}
         }
+        {{ if $extras }}
+        {{ $extras }}
+        {{ end }}
         {{ end }}
       {{ end }}
     {{ else }}
@@ -45,10 +45,10 @@
           {{ if $websocket }}
           websocket
           {{ end }}
-          {{ if $extras }}
-          {{ $extras }}
-          {{ end }}
         }
+        {{ if $extras }}
+        {{ $extras }}
+        {{ end }}
         {{ end }}
       {{ end }}
     {{ end }}
