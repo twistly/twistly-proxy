@@ -2,6 +2,8 @@
 {{ $host }} {
   {{ range $index, $value := $containers }}
     {{ $basicauth := $value.Env.BASIC_AUTH }}
+    {{ $websocket := $value.Env.WEB_SOCKET }}
+    {{ $extras := $value.Env.EXTRAS }}
     {{ if $basicauth }}
         basicauth {{ $basicauth }}
     {{ end }}
@@ -9,20 +11,24 @@
     {{ if eq $addrLen 1 }}
       {{ with $address := index $value.Addresses 0 }}
       proxy / {{ $address.IP }}:{{ $address.Port }} {
-        header_upstream Host {host}
-        header_upstream X-Real-IP {remote}
-        header_upstream X-Forwarded-For {remote}
-        header_upstream X-Forwarded-Proto {scheme}
+        transparent
+        round_robin
+        {{ if $websocket }}
+        websocket
+        {{ end }}
+        {{ $extras }}
       }
       {{ end }}
     {{ else if $value.Env.VIRTUAL_PORT }}
       {{ range $i, $address := $value.Addresses }}
         {{ if eq $address.Port $value.Env.VIRTUAL_PORT }}
         proxy / {{ $address.IP }}:{{ $address.Port }} {
-          header_upstream Host {host}
-          header_upstream X-Real-IP {remote}
-          header_upstream X-Forwarded-For {remote}
-          header_upstream X-Forwarded-Proto {scheme}
+          transparent
+          round_robin
+          {{ if $websocket }}
+          websocket
+          {{ end }}
+          {{ $extras }}
         }
         {{ end }}
       {{ end }}
@@ -30,10 +36,12 @@
       {{ range $i, $address := $value.Addresses }}
         {{ if eq $address.Port "80" }}
         proxy / {{ $address.IP }}:{{ $address.Port }} {
-          header_upstream Host {host}
-          header_upstream X-Real-IP {remote}
-          header_upstream X-Forwarded-For {remote}
-          header_upstream X-Forwarded-Proto {scheme}
+          transparent
+          round_robin
+          {{ if $websocket }}
+          websocket
+          {{ end }}
+          {{ $extras }}
         }
         {{ end }}
       {{ end }}
