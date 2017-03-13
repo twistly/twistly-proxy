@@ -16,7 +16,9 @@
         {{ if $websocket }}
         websocket
         {{ end }}
+        {{ if $extras }}
         {{ $extras }}
+        {{ end }}
       }
       {{ end }}
     {{ else if $value.Env.VIRTUAL_PORT }}
@@ -28,7 +30,9 @@
           {{ if $websocket }}
           websocket
           {{ end }}
+          {{ if $extras }}
           {{ $extras }}
+          {{ end }}
         }
         {{ end }}
       {{ end }}
@@ -41,7 +45,9 @@
           {{ if $websocket }}
           websocket
           {{ end }}
+          {{ if $extras }}
           {{ $extras }}
+          {{ end }}
         }
         {{ end }}
       {{ end }}
