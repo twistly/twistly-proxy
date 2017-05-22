@@ -1,4 +1,4 @@
-FROM nimmis/alpine:3.5
+FROM nimmis/alpine:3.4
 MAINTAINER Alexis Tyler <xo@wvvw.me>
 
 RUN apk update && apk upgrade && \
